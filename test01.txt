@@ -1,0 +1,13 @@
+Una vez nos ha quedado la maquina virtual
+no es realmente ninguna máquina llena 
+de engranajes con un casco de realidad virtual
+sino un software, entremos más en detalle 
+sobre qué son las máquinas virtuales.
+
+Lo primero que debes saber es que hay dos
+tipos de máquinas virtuales diferenciadas por
+su funcionalidad: las de sistema y las de proceso
+si bien la gran mayoría de las veces
+que oigas hablar de una máquina virtual casi
+seguro que se estarán refiriendo a las de sistema.
+
