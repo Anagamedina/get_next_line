@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 21:58:14 by anamedin          #+#    #+#             */
-/*   Updated: 2024/04/02 20:38:24 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/04/06 13:25:59 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,37 @@ size_t ft_strlen(const char *str)
   size_t len;
 
   len = 0;
-  while (str[len])
+  while (str[len] != '\0')
 	len++;
    return len;
 }
 
-char  *ft_free(char **str)
+void  *ft_free(void *str)
 {
-  free(*str);
-  *str = NULL;
+  free(str);
+  str = NULL;
   return(NULL);
 }
 
-char *ft_strchr(const char *s, int c)
+int	ft_strchr( char *s, char *c)
 {
-  char  ch;
+  int  jump;
   int i;
 
-  ch = c;
-  i = 0;
-  while(s[i] != '\0')
+  jump = 0;
+  while(s[jump] != '\0')
   {
-    if (s[i] == ch)
-      return ((char *)&s[i]);
-    i++;
+    i = 0;
+	while (c[i] != '\0')
+	{
+		if (c[i] == s[jump])
+			return (jump);
+		i++;
+	}
+	jump++;
   }
-  if ((char)c == '\0')
-		return (&((char *)s)[i]);
-	return (0);
+  return(-1);
 }
-
 
 char *ft_strjoin(char *s1, char *s2)
 {
@@ -75,44 +76,35 @@ char *ft_strjoin(char *s1, char *s2)
 	return (ptr);
 }
 
-static	size_t	ft_check_size(size_t size_s, size_t len, int start)
+char	*ft_substr(const char *s, size_t start, size_t len)
 {
-	size_t	len_new_ptr;
+	char	*ptr;
+	size_t	i;
+	size_t	size;
 
-	if (len + start <= size_s)
-		len_new_ptr = len;
+	size = ft_strlen(s);
+	if (start + len < size)
+	size = len;
 	else
 	{
-		if ((size_t)start >= size_s)
-			len_new_ptr = 0;
+		if (start > size)
+			size = 0;
 		else
-			len_new_ptr = size_s - start;
+			size = size - start;
 	}
-	return (len_new_ptr);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*substr;
-	size_t	len_substr;
-	size_t	size_s;
-	size_t	i;
-
-	size_s = ft_strlen(s);
-	len_substr = ft_check_size(size_s, len, start);
-	substr = (char *) malloc(len_substr + 1);
-	if (substr == NULL)
+	ptr = (char *)malloc(size + 1);
+	if (ptr == NULL)
 		return (NULL);
 	i = 0;
-	while (i < len_substr && s[start + i] != '\0')
+	while (i < size)
 	{
-		substr[i] = s[start + i];
+		ptr[i] = s[start + i];
 		i++;
-	}
-	substr[i] = '\0';
-	return (substr);
-}
+	}	
+	ptr[i] = '\0';
+	return (ptr);
 
+}
 
 char	*ft_strdup(const char *s1)
 {
@@ -140,29 +132,4 @@ char	*ft_strdup(const char *s1)
 }
 
 
-/*char  *read_buf(int fd, char*storage)
-{
-  int   id_read;
-  char  *buffer_id;
 
-  id_read = 1;  //indica que leera desde el primer byte del archivo
-  buffer_id = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-  if (!buffer_id)
-    return(ft_free(&storage));
-  buffer_id[0] = '\0'; //esto inicializa buffer como una cadena vacia
-  while (id_read > 0 && !ft_strchr(buffer_id, '\n')) //s pueda leer y no \n
-  {
-    id_read = read(fd, buffer_id, BUFFER_SIZE);
-    if (id_read > 0)
-    {
-      buffer_id[id_read] = '\0';
-      storage = ft_strjoin(storage, buffer_id);
-    }
-  }
-
-  free(buffer_id);
-  if (id_read == -1)
-    return(ft_free(&storage));
-  return(storage);
-
-}*/
