@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 21:58:14 by anamedin          #+#    #+#             */
-/*   Updated: 2024/04/06 13:25:59 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/04/06 21:18:00 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ size_t ft_strlen(const char *str)
    return len;
 }
 
-void  *ft_free(void *str)
+void ft_free(void *ptr)
 {
-  free(str);
-  str = NULL;
-  return(NULL);
+    free(ptr);
 }
+
+
 
 int	ft_strchr( char *s, char *c)
 {
@@ -64,15 +64,17 @@ char *ft_strjoin(char *s1, char *s2)
 			return (0);
 		s1[0] = '\0';
 	}
-	ptr = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	ptr = (char *) malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!ptr)
-		return (ft_free(&s1));
+	{
+		ft_free(ptr);
+		return (NULL);
+	}	
 	while (s1[++i])
 		ptr[i] = s1[i];
 	while (s2[++j])
 		ptr[i + j] = s2[j];
 	ptr[i + j] = '\0';
-	free(s1);
 	return (ptr);
 }
 
@@ -130,6 +132,3 @@ char	*ft_strdup(const char *s1)
 	duplicate[i] = '\0';
 	return (duplicate);
 }
-
-
-

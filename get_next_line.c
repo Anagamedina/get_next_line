@@ -6,28 +6,27 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 22:01:03 by anamedin          #+#    #+#             */
-/*   Updated: 2024/04/06 15:35:50 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/04/06 21:04:59 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *initial_buffer(char *storage)
+char  *initial_buffer(char *storage)
 {
-        
-    char          *buf;
+    char  *buf;
   
     buf = storage;
     if (buf == NULL)
     {
-      buf  = (char*)malloc(1);
+      buf = (char *) malloc(sizeof(char));
       if (buf == NULL)
         return(NULL);
+
       *buf = '\0';
     }
-     return (buf);
-
- }
+    return (buf);
+}
 
 char *clean_storage(char *storage, char *read_storage, int bytes_read)
 {
@@ -39,7 +38,7 @@ char *clean_storage(char *storage, char *read_storage, int bytes_read)
     new_storage = ft_strjoin(storage, read_storage);
     if (new_storage == NULL)
       return(NULL);
-    free(storage);
+    ft_free(storage);
   }
   if (bytes_read == 0)
     new_storage = storage;
@@ -74,16 +73,16 @@ char *update_line_from_storage(char **storage, int bytes_read)
     *storage = ft_substr(*storage, jump + 1, len - jump - 1);
     if (*storage == NULL)
     {
-      free(line);
+      ft_free(line);
       return(NULL);
     }
-    free(tmp);
+    ft_free(tmp);
   } else if (bytes_read == 0){
     line = ft_substr(*storage, 0, len);
     if (line == NULL){
       return NULL;
     }
-    free(*storage);
+    ft_free(*storage);
     *storage = NULL;
   }
     return(line);
@@ -95,30 +94,35 @@ char  *line_read(char **storage, int fd)
   char  *line;
   int   bytes;
 
-  read_storage = (char *)malloc(BUFFER_SIZE +1);
+  read_storage = (char *)malloc(BUFFER_SIZE + 1);
   if (read_storage == NULL)
     return (NULL);
+
   line = NULL;
   while (line == NULL)
   {
-    bytes = read(fd, storage_read, BUFFER_SIZE);
+    bytes = read(fd, read_storage, BUFFER_SIZE);
     if (bytes < 0)
-      return (ft_free(storage_read));
-    storage[bytes] = '\0';
-    *storage = clean_storage(*storage, tmp_storage)
+    {
+      ft_free(read_storage);
+      return (NULL);
+
+    }
+    read_storage[bytes] = '\0';
+    *storage = clean_storage(*storage, read_storage, bytes);
+    if (*storage == NULL)
+    {
+        ft_free(read_storage);
+        return (NULL);
+    }
+    line = update_line_from_storage(storage, bytes);
+
+    
   }
+  ft_free(read_storage);
+  return (line);
 
 }
-
-
-
-
-
-
-
-
-
-
 
 
 char  *get_next_line(int fd)
@@ -135,31 +139,38 @@ char  *get_next_line(int fd)
   // EMPIEZA LEER LINIAS
   line = line_read(&storage, fd);
   if (line == NULL)
-    storage =  ft_free(storage);
+  {
+      ft_free(storage);
+      return (NULL);
+  }
+
   if (line != NULL && ft_strlen(line) == 0)
-    line =  ft_free(line);
+  {
+   ft_free(line);
+   return (NULL);
+  }
   return(line);
 
 }
 
-int	main(void)
+int main(void)
 {
-  int		fd;
-  char	    *line;
-  int		count;
+    int fd;
+    char *line;
+    int count;
 
-  fd = open("test01.txt", O_RDONLY);
-  if (fd < 0)
-	return (0);
-  count = 0;
-  while (line)
-  {
-	line = get_next_line(fd);
-	printf("LINE [%d] - %s", count, line);
-	count++;
-	free(line);
-  }
-  close(fd);
-  return (0);
-
+    fd = open("test01.txt", O_RDONLY);
+    if (fd < 0) {
+        printf("irror al abrir el archivo");
+        return (1);
+    }
+    count = 1; // Comenzamos en 1 para que la primera línea sea "LINE [1]"
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("LINE [%d] - %s\n", count, line);
+        count++;
+    }
+    ft_free(line);
+    close(fd);
+    return (0);
 }
