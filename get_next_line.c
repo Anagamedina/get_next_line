@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 22:01:03 by anamedin          #+#    #+#             */
-/*   Updated: 2024/04/06 21:04:59 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/04/07 18:06:43 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char  *initial_buffer(char *storage)
     return (buf);
 }
 
-char *clean_storage(char *storage, char *read_storage, int bytes_read)
+char  *clean_storage(char *storage, char *read_storage, int bytes_read)
 {
   char *new_storage;
 
@@ -42,13 +42,11 @@ char *clean_storage(char *storage, char *read_storage, int bytes_read)
   }
   if (bytes_read == 0)
     new_storage = storage;
-  return(new_storage);
+  return (new_storage);
 }
 
-char *update_line_from_storage(char **storage, int bytes_read)
-
-
-    //SUBSTR(cadena; inicio; longitud)
+//SUBSTR(cadena; inicio; longitud)
+/*char  *update_line_from_storage(char **storage, int bytes_read)
 {
   char    *line;
   int     jump;
@@ -58,26 +56,24 @@ char *update_line_from_storage(char **storage, int bytes_read)
   line = NULL;
   len = ft_strlen(*storage);
   jump = ft_strchr(*storage, "\n");
-
   if(jump >= 0)
   {
     //subcadena antes del salto de linia
     line = ft_substr(*storage, 0, jump + 1);
     if (line == NULL)
-    {
       return NULL;
-    }
-
     //actualizar storage para apuntar antes de saltoo de linia
     tmp = *storage;
     *storage = ft_substr(*storage, jump + 1, len - jump - 1);
     if (*storage == NULL)
     {
-      ft_free(line);
-      return(NULL);
+      //ft_free(line);
+      return (ft_free(line), NULL);
     }
     ft_free(tmp);
-  } else if (bytes_read == 0){
+  }
+  else if (bytes_read == 0)
+  {
     line = ft_substr(*storage, 0, len);
     if (line == NULL){
       return NULL;
@@ -86,6 +82,34 @@ char *update_line_from_storage(char **storage, int bytes_read)
     *storage = NULL;
   }
     return(line);
+}*/
+
+
+char  *update_line_from_storage(char  **storage, int bytes_read)
+{
+  char    *line;
+  int     jump;
+  char    *tmp;
+  size_t  len;
+
+  line = NULL;
+  len = ft_strlen(*storage);
+  jump = ft_strchr(*storage, '\n');
+  if (jump >= 0)
+  {
+    line = ft_substr(*storage, 0, jump + 1);
+    tmp = *storage;
+    *storage = ft_substr(*storage, jump + 1, len);
+    ft_free(tmp);
+    return (line);
+  }
+  if (bytes_read == 0)
+  {
+    line = ft_substr(*storage, 0, len);
+    ft_free(*storage);
+    *storage = NULL;
+  }
+  return(line);
 }
 
 char  *line_read(char **storage, int fd)
@@ -97,7 +121,6 @@ char  *line_read(char **storage, int fd)
   read_storage = (char *)malloc(BUFFER_SIZE + 1);
   if (read_storage == NULL)
     return (NULL);
-
   line = NULL;
   while (line == NULL)
   {
@@ -153,6 +176,7 @@ char  *get_next_line(int fd)
 
 }
 
+/*
 int main(void)
 {
     int fd;
@@ -165,12 +189,14 @@ int main(void)
         return (1);
     }
     count = 1; // Comenzamos en 1 para que la primera línea sea "LINE [1]"
+    //while ((line = get_next_line(-1)) != NULL)
     while ((line = get_next_line(fd)) != NULL)
     {
-        printf("LINE [%d] - %s\n", count, line);
+        printf("LINE [%d] - %s", count, line);
         count++;
     }
     ft_free(line);
     close(fd);
     return (0);
 }
+*/

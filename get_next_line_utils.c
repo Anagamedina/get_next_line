@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 21:58:14 by anamedin          #+#    #+#             */
-/*   Updated: 2024/04/06 21:18:00 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/04/07 18:06:19 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,25 @@ size_t ft_strlen(const char *str)
    return len;
 }
 
-void ft_free(void *ptr)
+void	ft_free(void *ptr)
 {
     free(ptr);
+	ptr = NULL;
 }
 
+int ft_strchr(char *s, char c)
+{
+    int index = 0;
+    while (s[index] != '\0')
+    {
+        if (s[index] == c)
+            return index;
+        index++;
+    }
+    return (-1);
+}
 
-
-int	ft_strchr( char *s, char *c)
+/*int	ft_strchr( char *s, char *c)
 {
   int  jump;
   int i;
@@ -47,7 +58,7 @@ int	ft_strchr( char *s, char *c)
 	jump++;
   }
   return(-1);
-}
+}*/
 
 char *ft_strjoin(char *s1, char *s2)
 {
@@ -108,7 +119,7 @@ char	*ft_substr(const char *s, size_t start, size_t len)
 
 }
 
-char	*ft_strdup(const char *s1)
+/*char	*ft_strdup(const char *s1)
 {
 	size_t	size_s1;
 	size_t	i;
@@ -131,4 +142,4 @@ char	*ft_strdup(const char *s1)
 	}
 	duplicate[i] = '\0';
 	return (duplicate);
-}
+}*/
