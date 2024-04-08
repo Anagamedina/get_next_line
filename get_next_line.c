@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 22:01:03 by anamedin          #+#    #+#             */
-/*   Updated: 2024/04/08 17:11:10 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/04/08 20:57:22 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,27 +104,22 @@ char  *get_next_line(int fd)
   static char   *storage;
   char          *line;
 
+  if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+    return (NULL);
 
-  if (fd < 0 || BUFFER_SIZE <= 0)
-    return(NULL);
   storage = initial_buffer(storage);
   if (storage == NULL)
     return (NULL);
   // EMPIEZA LEER LINIAS
   line = line_read(&storage, fd);
   if (line == NULL)
-  {
-      ft_free(storage);
-      return (NULL);
-  }
-
+      return (ft_free(storage),NULL);
   if (line != NULL && ft_strlen(line) == 0)
   {
-   ft_free(line);
-   return (NULL);
+    ft_free(line);
+    return (NULL);
   }
   return(line);
-
 }
 
 
@@ -148,4 +143,4 @@ char  *get_next_line(int fd)
     }
     close(fd);
     return (0);
-}*/
+}I*/
