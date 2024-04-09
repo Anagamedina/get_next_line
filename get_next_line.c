@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 22:01:03 by anamedin          #+#    #+#             */
-/*   Updated: 2024/04/09 18:29:38 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/04/09 20:04:09 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,36 @@
 
 char  *initial_buffer(char *storage)
 {
-    char  *buf;
-  
-    buf = storage;
-    if (buf == NULL)
-    {
-      buf = (char *) malloc(sizeof(char));
-      if (buf == NULL)
-        return(NULL);
+  char  *buf;
 
-      *buf = '\0';
-    }
-    return (buf);
+  buf = storage;
+  if (buf == NULL)
+  {
+    buf = (char *) malloc(sizeof(char));
+    if (buf == NULL)
+      return(NULL);
+    *buf = '\0';
+  }
+  return (buf);
 }
 
 char  *clean_storage(char *storage, char *read_storage, int bytes_read)
 {
-  char *new_storage;
+    char  *new_storage;
 
-  new_storage = NULL;
-  if (bytes_read > 0)
-  {
-    new_storage = ft_strjoin(storage, read_storage);
+    new_storage = NULL;
+    if(bytes_read > 0)
+    {
+      new_storage = ft_strjoin(storage, read_storage);
     if (new_storage == NULL)
-      return(NULL);
+      return (NULL);
     ft_free(storage);
   }
   if (bytes_read == 0)
     new_storage = storage;
   return (new_storage);
 }
+
 
 char  *update_line_from_storage(char  **storage, int bytes_read)
 {
@@ -142,4 +142,4 @@ int main(void)
     }
     close(fd);
     return (0);
-}
+
