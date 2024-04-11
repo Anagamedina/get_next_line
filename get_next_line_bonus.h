@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:29:56 by anamedin          #+#    #+#             */
-/*   Updated: 2024/04/11 18:14:59 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/04/11 19:49:26 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
-#  define OPEN_MAX
-
+//#  define OPEN_MAX  10
 # endif
 
 char		*get_next_line(int fd);

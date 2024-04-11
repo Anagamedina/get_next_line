@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:28:35 by anamedin          #+#    #+#             */
-/*   Updated: 2024/04/11 16:45:10 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/04/11 20:12:17 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*clean_storage(char *storage, char *read_storage, int bytes_read)
 	return (new_storage);
 }
 
-char	*initial_buffer(char *storage)
+static char	*initial_buffer(char *storage)
 {
 	char	*buf;
 
@@ -97,14 +97,11 @@ static char	*line_read(char **storage, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*storage[OPEN_MAX];
-	char		*line;
+	static char		*storage[OPEN_MAX];
+	char			*line;
 
-	if ((fd < 0 || BUFFER_SIZE <= 0) || read(fd, 0, 0) < 0)
-		|| fd > OPEN_MAX
-	{
+	if ((fd < 0 || BUFFER_SIZE <= 0) || read(fd, 0, 0) < 0 || (fd > OPEN_MAX))
 		return (ft_free(storage[fd]), NULL);
-	}
 	storage[fd] = initial_buffer(storage[fd]);
 	if (storage[fd] == NULL)
 		return (NULL);
@@ -119,7 +116,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	int		fd[2];
 	char	*line;
@@ -143,4 +140,4 @@ int	main(void)
 	}
 	close(*fd);
 	return (0);
-}
+}*/
