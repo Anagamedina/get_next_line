@@ -22,10 +22,10 @@ size_t	ft_strlen(const char *str)
 	return (len);
 }
 
-void	*ft_free(void *ptr)
+char	*ft_free(char **ptr)
 {
-	free(ptr);
-	ptr = NULL;
+	free(*ptr);
+	*ptr = NULL;
 	return (NULL);
 }
 

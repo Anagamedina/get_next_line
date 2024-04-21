@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 16:30:30 by anamedin          #+#    #+#             */
-/*   Updated: 2024/04/11 19:51:46 by anamedin         ###   ########.fr       */
+/*   Created: 2024/03/29 21:58:14 by anamedin          #+#    #+#             */
+/*   Updated: 2024/04/11 16:17:27 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ size_t	ft_strlen(const char *str)
 	return (len);
 }
 
-void	*ft_free(void *ptr)
+char	*ft_free(char **ptr)
 {
-	free(ptr);
-	ptr = NULL;
+	free(*ptr);
+	*ptr = NULL;
 	return (NULL);
 }
 

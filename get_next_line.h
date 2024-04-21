@@ -26,7 +26,7 @@ char		*get_next_line(int fd);
 size_t		ft_strlen(const char *str);
 char		*ft_strjoin(char *s1, char *s2);
 int			ft_strchr( char *s, char c);
-void		*ft_free(void *ptr);
+char		*ft_free(char **ptr);
 char		*ft_substr(const char *s, size_t start, size_t len);
 
 #endif
